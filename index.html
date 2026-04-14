@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Budget Tracker</h1>
+    <div class="summary">
+      <div class="summary-card">
+        <span class="summary-label">Bank Balance</span>
+        <span class="summary-value" id="summary-balance">$0.00</span>
+      </div>
+      <div class="summary-card">
+        <span class="summary-label">Assigned</span>
+        <span class="summary-value" id="summary-assigned">$0.00</span>
+      </div>
+      <div class="summary-card highlight">
+        <span class="summary-label">Ready to Assign</span>
+        <span class="summary-value" id="summary-ready">$0.00</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Bank Account</h2>
+      <div class="row">
+        <label for="bank-balance">Current bank balance:</label>
+        <input type="number" id="bank-balance" step="0.01" placeholder="0.00" />
+        <button id="save-balance" class="btn primary">Save</button>
+      </div>
+      <p class="hint">
+        Enter the total cash currently in your bank account. This is the pool
+        of money you'll assign across your categories.
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Categories</h2>
+        <button id="add-category-btn" class="btn primary">+ Add Category</button>
+      </div>
+
+      <form id="add-category-form" class="inline-form hidden">
+        <input type="text" id="new-category-name" placeholder="Category name (e.g. Groceries)" required />
+        <input type="number" id="new-category-target" step="0.01" placeholder="Target amount" />
+        <button type="submit" class="btn primary">Add</button>
+        <button type="button" id="cancel-add-category" class="btn">Cancel</button>
+      </form>
+
+      <div class="table-wrapper">
+        <table id="categories-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th class="num">Target</th>
+              <th class="num">Assigned</th>
+              <th class="num">Spent</th>
+              <th class="num">Available</th>
+              <th>Progress</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="categories-body">
+            <tr class="empty-row"><td colspan="7">No categories yet. Add one to start budgeting.</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Totals</th>
+              <th class="num" id="total-target">$0.00</th>
+              <th class="num" id="total-assigned">$0.00</th>
+              <th class="num" id="total-spent">$0.00</th>
+              <th class="num" id="total-available">$0.00</th>
+              <th colspan="2"></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Transactions</h2>
+        <button id="add-transaction-btn" class="btn primary">+ Add Transaction</button>
+      </div>
+
+      <form id="add-transaction-form" class="inline-form hidden">
+        <input type="date" id="new-tx-date" required />
+        <select id="new-tx-category" required></select>
+        <input type="text" id="new-tx-payee" placeholder="Payee / note" />
+        <input type="number" id="new-tx-amount" step="0.01" placeholder="Amount spent" required />
+        <button type="submit" class="btn primary">Add</button>
+        <button type="button" id="cancel-add-tx" class="btn">Cancel</button>
+      </form>
+
+      <div class="table-wrapper">
+        <table id="transactions-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Payee / Note</th>
+              <th class="num">Amount</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="transactions-body">
+            <tr class="empty-row"><td colspan="5">No transactions yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel danger-zone">
+      <h2>Data</h2>
+      <div class="row">
+        <button id="export-data" class="btn">Export JSON</button>
+        <button id="import-data" class="btn">Import JSON</button>
+        <input type="file" id="import-file" accept="application/json" hidden />
+        <button id="reset-data" class="btn danger">Reset All Data</button>
+      </div>
+      <p class="hint">Your data is stored locally in your browser (localStorage).</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
